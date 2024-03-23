@@ -102,4 +102,46 @@ public class EmployeeController {
 
         return Result.success(pageResult);
     }
+
+    /**
+     * 用于启用禁用用户
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用用户")
+    public Result startOrStop(@PathVariable Integer status, long id){
+        log.info("启用禁用用户,{},{}",status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
+
+    /**
+     * 根据id返回一个employee
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id获得单个用户")
+    public Result<Employee> getById(@PathVariable long id){
+        log.info("返回单个用户,{}",id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+
+    /**
+     * 修改用户
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping()
+    @ApiOperation("更新用户")
+    public Result<String> update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("用户更新,{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }
